@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.ReturnOrderLogMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.ReturnOrderLogEntity" >
+	<id column="log_id" property="logId" jdbcType="DECIMAL" />
+	<result column="order_status_before" property="orderStatusBefore" jdbcType="VARCHAR" />
+	<result column="order_status_after" property="orderStatusAfter" jdbcType="VARCHAR" />
+	<result column="operator_type" property="operatorType" jdbcType="VARCHAR" />
+	<result column="log_desc" property="logDesc" jdbcType="VARCHAR" />
+	<result column="event_ts" property="eventTs" jdbcType="TIMESTAMP" />
+	<result column="operator" property="operator" jdbcType="VARCHAR" />
+	<result column="return_order_id" property="returnOrderId" jdbcType="DECIMAL" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+</resultMap>
+       
+<!-- return_order_log table all fields -->
+<sql id="Base_Column_List" >
+	 log_id, order_status_before, order_status_after, operator_type, log_desc, event_ts, operator, return_order_id, create_time, update_time
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="logId != null" >
+	    and log_id = #{logId, jdbcType=DECIMAL}
+	</if>
+	<if test="orderStatusBefore != null and orderStatusBefore != ''" >
+	    and order_status_before = #{orderStatusBefore, jdbcType=VARCHAR}
+	</if>
+	<if test="orderStatusAfter != null and orderStatusAfter != ''" >
+	    and order_status_after = #{orderStatusAfter, jdbcType=VARCHAR}
+	</if>
+	<if test="operatorType != null and operatorType != ''" >
+	    and operator_type = #{operatorType, jdbcType=VARCHAR}
+	</if>
+	<if test="logDesc != null and logDesc != ''" >
+	    and log_desc = #{logDesc, jdbcType=VARCHAR}
+	</if>
+	<if test="eventTs != null" >
+	    and event_ts = #{eventTs, jdbcType=TIMESTAMP}
+	</if>
+	<if test="operator != null and operator != ''" >
+	    and operator = #{operator, jdbcType=VARCHAR}
+	</if>
+	<if test="returnOrderId != null" >
+	    and return_order_id = #{returnOrderId, jdbcType=DECIMAL}
+	</if>
+	<if test="createTime != null" >
+	    and create_time = #{createTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="updateTime != null" >
+	    and update_time = #{updateTime, jdbcType=TIMESTAMP}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.ReturnOrderLogEntity" useGeneratedKeys="true" keyProperty="logId">
+  	insert into return_order_log(
+		order_status_before,
+		order_status_after,
+		operator_type,
+		log_desc,
+		event_ts,
+		operator,
+		return_order_id,
+		create_time,
+		update_time
+	) values (
+		#{orderStatusBefore, jdbcType=VARCHAR},
+		#{orderStatusAfter, jdbcType=VARCHAR},
+		#{operatorType, jdbcType=VARCHAR},
+		#{logDesc, jdbcType=VARCHAR},
+		#{eventTs, jdbcType=TIMESTAMP},
+		#{operator, jdbcType=VARCHAR},
+		#{returnOrderId, jdbcType=DECIMAL},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.ReturnOrderLogEntity" >
+	update return_order_log set 
+	<trim  suffixOverrides="," >
+		<if test="orderStatusBefore != null  and orderStatusBefore != '' ">
+			order_status_before = #{orderStatusBefore, jdbcType=VARCHAR},
+		</if>
+		<if test="orderStatusAfter != null  and orderStatusAfter != '' ">
+			order_status_after = #{orderStatusAfter, jdbcType=VARCHAR},
+		</if>
+		<if test="operatorType != null  and operatorType != '' ">
+			operator_type = #{operatorType, jdbcType=VARCHAR},
+		</if>
+		<if test="logDesc != null  and logDesc != '' ">
+			log_desc = #{logDesc, jdbcType=VARCHAR},
+		</if>
+		<if test="eventTs != null  ">
+			event_ts = #{eventTs, jdbcType=TIMESTAMP},
+		</if>
+		<if test="operator != null  and operator != '' ">
+			operator = #{operator, jdbcType=VARCHAR},
+		</if>
+		<if test="returnOrderId != null  ">
+			return_order_id = #{returnOrderId, jdbcType=DECIMAL},
+		</if>
+		<if test="createTime != null  ">
+			create_time = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null  ">
+			update_time = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+	</trim> 
+	where log_id = #{logId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.ReturnOrderLogEntity">
+	delete from return_order_log where log_id = #{logId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.ReturnOrderLogTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from return_order_log 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

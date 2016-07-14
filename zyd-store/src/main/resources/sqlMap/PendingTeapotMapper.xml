@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.PendingTeapotMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.TeapotEntity" >
+	<result column="cmmdty_id" property="cmmdtyId" jdbcType="DECIMAL" />
+	<result column="category" property="category" jdbcType="VARCHAR" />
+	<result column="cmmdty_name" property="cmmdtyName" jdbcType="VARCHAR" />
+	<result column="cmmdty_num" property="cmmdtyNum" jdbcType="VARCHAR" />
+	<result column="cmmdty_desc" property="cmmdtyDesc" jdbcType="VARCHAR" />
+	<result column="num_stored" property="numStored" jdbcType="INTEGER" />
+	<result column="num_sales" property="numSales" jdbcType="INTEGER" />
+	<result column="num_evaluated" property="numEvaluated" jdbcType="INTEGER" />
+	<result column="num_enquired" property="numEnquired" jdbcType="INTEGER" />
+	<result column="proposed_price" property="proposedPrice" jdbcType="DECIMAL" />
+	<result column="current_price" property="currentPrice" jdbcType="DECIMAL" />
+	<result column="shelves_time" property="shelvesTime" jdbcType="DATE" />
+	<result column="unshelves_time" property="unshelvesTime" jdbcType="DATE" />
+	<result column="default_image_addrs" property="defaultImageAddrs" jdbcType="VARCHAR" />
+	<result column="type" property="type" jdbcType="VARCHAR" />
+	<result column="shape" property="shape" jdbcType="VARCHAR" />
+	<result column="material" property="material" jdbcType="VARCHAR" />
+	<result column="size" property="size" jdbcType="INTEGER" />
+	<result column="level" property="level" jdbcType="VARCHAR" />
+	<result column="producer" property="producer" jdbcType="VARCHAR" />
+	<result column="sales_mode" property="salesMode" jdbcType="VARCHAR" />
+	<result column="price_region" property="priceRegion" jdbcType="VARCHAR" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+</resultMap>
+       
+<!-- teapot table all fields -->
+<sql id="Base_Column_List" >
+	 cmmdty_id, category, cmmdty_name, cmmdty_num, cmmdty_desc, num_stored, num_sales, num_evaluated, num_enquired, proposed_price, current_price, shelves_time, unshelves_time, default_image_addrs, type, shape, material, size, level, producer, sales_mode, price_region, create_time, update_time
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="cmmdtyId != null" >
+	    and cmmdty_id = #{cmmdtyId, jdbcType=DECIMAL}
+	</if>
+	<if test="category != null and category != ''" >
+	    and category = #{category, jdbcType=VARCHAR}
+	</if>
+	<if test="cmmdtyName != null and cmmdtyName != ''" >
+	    and cmmdty_name = #{cmmdtyName, jdbcType=VARCHAR}
+	</if>
+	<if test="cmmdtyNum != null and cmmdtyNum != ''" >
+	    and cmmdty_num = #{cmmdtyNum, jdbcType=VARCHAR}
+	</if>
+	<if test="cmmdtyDesc != null and cmmdtyDesc != ''" >
+	    and cmmdty_desc = #{cmmdtyDesc, jdbcType=VARCHAR}
+	</if>
+	<if test="numStored != null" >
+	    and num_stored = #{numStored, jdbcType=INTEGER}
+	</if>
+	<if test="numSales != null" >
+	    and num_sales = #{numSales, jdbcType=INTEGER}
+	</if>
+	<if test="numEvaluated != null" >
+	    and num_evaluated = #{numEvaluated, jdbcType=INTEGER}
+	</if>
+	<if test="numEnquired != null" >
+        and num_enquired = #{numEnquired, jdbcType=INTEGER}
+    </if>
+	<if test="proposedPrice != null" >
+	    and proposed_price = #{proposedPrice, jdbcType=DECIMAL}
+	</if>
+	<if test="currentPrice != null" >
+	    and current_price = #{currentPrice, jdbcType=DECIMAL}
+	</if>
+	<if test="shelvesTime != null" >
+	    and shelves_time = #{shelvesTime, jdbcType=DATE}
+	</if>
+	<if test="unshelvesTime != null" >
+	    and unshelves_time = #{unshelvesTime, jdbcType=DATE}
+	</if>
+	<if test="defaultImageAddrs != null and defaultImageAddrs != ''" >
+	    and default_image_addrs = #{defaultImageAddrs, jdbcType=VARCHAR}
+	</if>
+	<if test="type != null and type != ''" >
+	    and type = #{type, jdbcType=VARCHAR}
+	</if>
+	<if test="shape != null and shape != ''" >
+	    and shape = #{shape, jdbcType=VARCHAR}
+	</if>
+	<if test="material != null and material != ''" >
+	    and material = #{material, jdbcType=VARCHAR}
+	</if>
+	<if test="size != null" >
+	    and size = #{size, jdbcType=INTEGER}
+	</if>
+	<if test="level != null and level != ''" >
+	    and level = #{level, jdbcType=VARCHAR}
+	</if>
+	<if test="producer != null and producer != ''" >
+	    and producer = #{producer, jdbcType=VARCHAR}
+	</if>
+	<if test="salesMode != null and salesMode != ''" >
+	    and sales_mode = #{salesMode, jdbcType=VARCHAR}
+	</if>
+	<if test="priceRegion != null and priceRegion != ''" >
+	    and price_region = #{priceRegion, jdbcType=VARCHAR}
+	</if>
+	<if test="createTime != null" >
+	    and create_time = #{createTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="updateTime != null" >
+	    and update_time = #{updateTime, jdbcType=TIMESTAMP}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.TeapotEntity" >
+  	insert into pending_teapot(
+		cmmdty_id,
+		category,
+		cmmdty_name,
+		cmmdty_num,
+		cmmdty_desc,
+		num_stored,
+		num_sales,
+		num_evaluated,
+		num_enquired,
+		proposed_price,
+		current_price,
+		shelves_time,
+		unshelves_time,
+		default_image_addrs,
+		type,
+		shape,
+		material,
+		size,
+		level,
+		producer,
+		sales_mode,
+		price_region,
+		create_time,
+		update_time
+	) values (
+		#{cmmdtyId, jdbcType=DECIMAL},
+		#{category, jdbcType=VARCHAR},
+		#{cmmdtyName, jdbcType=VARCHAR},
+		#{cmmdtyNum, jdbcType=VARCHAR},
+		#{cmmdtyDesc, jdbcType=VARCHAR},
+		#{numStored, jdbcType=INTEGER},
+		#{numSales, jdbcType=INTEGER},
+		#{numEvaluated, jdbcType=INTEGER},
+		#{numEnquired, jdbcType=INTEGER},
+		#{proposedPrice, jdbcType=DECIMAL},
+		#{currentPrice, jdbcType=DECIMAL},
+		#{shelvesTime, jdbcType=DATE},
+		#{unshelvesTime, jdbcType=DATE},
+		#{defaultImageAddrs, jdbcType=VARCHAR},
+		#{type, jdbcType=VARCHAR},
+		#{shape, jdbcType=VARCHAR},
+		#{material, jdbcType=VARCHAR},
+		#{size, jdbcType=INTEGER},
+		#{level, jdbcType=VARCHAR},
+		#{producer, jdbcType=VARCHAR},
+		#{salesMode, jdbcType=VARCHAR},
+		#{priceRegion, jdbcType=VARCHAR},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	)
+</insert>
+
+<!-- 批量插入记录 -->
+<insert id="insertBatch" parameterType="java.util.List" >
+  	insert into pending_teapot(
+		cmmdty_id,
+		category,
+		cmmdty_name,
+		cmmdty_num,
+		cmmdty_desc,
+		num_stored,
+		num_sales,
+		num_evaluated,
+		num_enquired,
+		proposed_price,
+		current_price,
+		shelves_time,
+		unshelves_time,
+		default_image_addrs,
+		type,
+		shape,
+		material,
+		size,
+		level,
+		producer,
+		sales_mode,
+		price_region,
+		create_time,
+		update_time
+	) values 
+	<foreach collection="list" item="item" index="index" separator="," > 
+	(
+		#{item.cmmdtyId, jdbcType=DECIMAL},
+		#{item.category, jdbcType=VARCHAR},
+		#{item.cmmdtyName, jdbcType=VARCHAR},
+		#{item.cmmdtyNum, jdbcType=VARCHAR},
+		#{item.cmmdtyDesc, jdbcType=VARCHAR},
+		#{item.numStored, jdbcType=INTEGER},
+		#{item.numSales, jdbcType=INTEGER},
+		#{item.numEvaluated, jdbcType=INTEGER},
+		#{item.numEnquired, jdbcType=INTEGER},
+		#{item.proposedPrice, jdbcType=DECIMAL},
+		#{item.currentPrice, jdbcType=DECIMAL},
+		#{item.shelvesTime, jdbcType=DATE},
+		#{item.unshelvesTime, jdbcType=DATE},
+		#{item.defaultImageAddrs, jdbcType=VARCHAR},
+		#{item.type, jdbcType=VARCHAR},
+		#{item.shape, jdbcType=VARCHAR},
+		#{item.material, jdbcType=VARCHAR},
+		#{item.size, jdbcType=INTEGER},
+		#{item.level, jdbcType=VARCHAR},
+		#{item.producer, jdbcType=VARCHAR},
+		#{item.salesMode, jdbcType=VARCHAR},
+		#{item.priceRegion, jdbcType=VARCHAR},
+		#{item.createTime, jdbcType=TIMESTAMP},
+		#{item.updateTime, jdbcType=TIMESTAMP}
+	)
+	</foreach>
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.TeapotEntity" >
+	update pending_teapot set 
+	<trim  suffixOverrides="," >
+		<if test="category != null  and category != '' ">
+			category = #{category, jdbcType=VARCHAR},
+		</if>
+		<if test="cmmdtyName != null  and cmmdtyName != '' ">
+			cmmdty_name = #{cmmdtyName, jdbcType=VARCHAR},
+		</if>
+		<if test="cmmdtyNum != null  and cmmdtyNum != '' ">
+			cmmdty_num = #{cmmdtyNum, jdbcType=VARCHAR},
+		</if>
+		<if test="cmmdtyDesc != null  and cmmdtyDesc != '' ">
+			cmmdty_desc = #{cmmdtyDesc, jdbcType=VARCHAR},
+		</if>
+		<if test="numStored != null  ">
+			num_stored = #{numStored, jdbcType=INTEGER},
+		</if>
+		<if test="numSales != null  ">
+			num_sales = #{numSales, jdbcType=INTEGER},
+		</if>
+		<if test="numEvaluated != null  ">
+			num_evaluated = #{numEvaluated, jdbcType=INTEGER},
+		</if>
+		<if test="numEnquired != null  ">
+            num_enquired = #{numEnquired, jdbcType=INTEGER},
+        </if>
+		<if test="proposedPrice != null  ">
+			proposed_price = #{proposedPrice, jdbcType=DECIMAL},
+		</if>
+		<if test="currentPrice != null  ">
+			current_price = #{currentPrice, jdbcType=DECIMAL},
+		</if>
+		<if test="shelvesTime != null  ">
+			shelves_time = #{shelvesTime, jdbcType=DATE},
+		</if>
+		<if test="unshelvesTime != null  ">
+			unshelves_time = #{unshelvesTime, jdbcType=DATE},
+		</if>
+		<if test="defaultImageAddrs != null  and defaultImageAddrs != '' ">
+			default_image_addrs = #{defaultImageAddrs, jdbcType=VARCHAR},
+		</if>
+		<if test="type != null  and type != '' ">
+			type = #{type, jdbcType=VARCHAR},
+		</if>
+		<if test="shape != null  and shape != '' ">
+			shape = #{shape, jdbcType=VARCHAR},
+		</if>
+		<if test="material != null  and material != '' ">
+			material = #{material, jdbcType=VARCHAR},
+		</if>
+		<if test="size != null  ">
+			size = #{size, jdbcType=INTEGER},
+		</if>
+		<if test="level != null  and level != '' ">
+			level = #{level, jdbcType=VARCHAR},
+		</if>
+		<if test="producer != null  and producer != '' ">
+			producer = #{producer, jdbcType=VARCHAR},
+		</if>
+		<if test="salesMode != null  and salesMode != '' ">
+			sales_mode = #{salesMode, jdbcType=VARCHAR},
+		</if>
+		<if test="priceRegion != null  and priceRegion != '' ">
+			price_region = #{priceRegion, jdbcType=VARCHAR},
+		</if>
+		<if test="createTime != null  ">
+			create_time = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null  ">
+			update_time = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+	</trim> 
+	where cmmdty_id = #{cmmdtyId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.TeapotEntity">
+	delete from pending_teapot where cmmdty_id = #{cmmdtyId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.TeapotTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from pending_teapot 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

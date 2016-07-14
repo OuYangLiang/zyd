@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.EvaluationLabelRelMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.EvaluationLabelRelEntity" >
+	<result column="eval_id" property="evalId" jdbcType="DECIMAL" />
+	<result column="label_id" property="labelId" jdbcType="DECIMAL" />
+</resultMap>
+       
+<!-- evaluation_label_rel table all fields -->
+<sql id="Base_Column_List" >
+	 eval_id, label_id
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="evalId != null" >
+	    and eval_id = #{evalId, jdbcType=DECIMAL}
+	</if>
+	<if test="labelId != null" >
+	    and label_id = #{labelId, jdbcType=DECIMAL}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.EvaluationLabelRelEntity" >
+  	insert into evaluation_label_rel(
+		eval_id,
+		label_id
+	) values (
+		#{evalId, jdbcType=DECIMAL},
+		#{labelId, jdbcType=DECIMAL}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.EvaluationLabelRelEntity" >
+	update evaluation_label_rel set 
+	<trim  suffixOverrides="," >
+		<if test="labelId != null  ">
+			label_id = #{labelId, jdbcType=DECIMAL},
+		</if>
+	</trim> 
+	where eval_id = #{evalId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.EvaluationLabelRelEntity">
+	delete from evaluation_label_rel where eval_id = #{evalId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.EvaluationLabelRelTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from evaluation_label_rel 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

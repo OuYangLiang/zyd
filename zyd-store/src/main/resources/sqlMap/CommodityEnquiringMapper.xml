@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.CommodityEnquiringMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.CommodityEnquiringEntity" >
+	<id column="enquiring_id" property="enquiringId" jdbcType="DECIMAL" />
+	<result column="enquiring_content" property="enquiringContent" jdbcType="VARCHAR" />
+	<result column="event_ts" property="eventTs" jdbcType="TIMESTAMP" />
+	<result column="cmmdty_id" property="cmmdtyId" jdbcType="DECIMAL" />
+	<result column="party_id" property="partyId" jdbcType="DECIMAL" />
+	<result column="answerer" property="answerer" jdbcType="VARCHAR" />
+	<result column="answer" property="answer" jdbcType="VARCHAR" />
+	<result column="answer_ts" property="answerTs" jdbcType="TIMESTAMP" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+</resultMap>
+
+<!-- Summary Map-->
+<resultMap id="SummaryResultMap" type="org.zyd.store.entity.CommodityEnquiringEntity" >
+	<result column="enquiring_id" property="enquiringId" jdbcType="DECIMAL" />
+	<result column="enquiring_content" property="enquiringContent" jdbcType="VARCHAR" />
+	<result column="event_ts" property="eventTs" jdbcType="TIMESTAMP" />
+	<result column="cmmdty_id" property="cmmdtyId" jdbcType="DECIMAL" />
+	<result column="party_id" property="partyId" jdbcType="DECIMAL" />
+	<result column="answerer" property="answerer" jdbcType="VARCHAR" />
+	<result column="answer" property="answer" jdbcType="VARCHAR" />
+	<result column="answer_ts" property="answerTs" jdbcType="TIMESTAMP" />
+	<result column="acnt_val" property="acntVal" jdbcType="VARCHAR" />
+</resultMap>
+       
+<!-- commodity_enquiring table all fields -->
+<sql id="Base_Column_List" >
+	 enquiring_id, enquiring_content, event_ts, cmmdty_id, party_id, answerer, answer, answer_ts, create_time, update_time
+</sql>
+       
+<!-- commodity_enquiring table summary fields -->
+<sql id="Summary_Column_List" >
+	 c.enquiring_id, c.enquiring_content, c.event_ts, c.cmmdty_id, c.party_id, c.answerer, c.answer, c.answer_ts, p.acnt_val
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="enquiringId != null" >
+	    and enquiring_id = #{enquiringId, jdbcType=DECIMAL}
+	</if>
+	<if test="enquiringContent != null and enquiringContent != ''" >
+	    and enquiring_content = #{enquiringContent, jdbcType=VARCHAR}
+	</if>
+	<if test="eventTs != null" >
+	    and event_ts = #{eventTs, jdbcType=TIMESTAMP}
+	</if>
+	<if test="cmmdtyId != null" >
+	    and cmmdty_id = #{cmmdtyId, jdbcType=DECIMAL}
+	</if>
+	<if test="partyId != null" >
+	    and party_id = #{partyId, jdbcType=DECIMAL}
+	</if>
+	<if test="answerer != null and answerer != ''" >
+	    and answerer = #{answerer, jdbcType=VARCHAR}
+	</if>
+	<if test="answer != null and answer != ''" >
+	    and answer = #{answer, jdbcType=VARCHAR}
+	</if>
+	<if test="answerTs != null" >
+	    and answer_ts = #{answerTs, jdbcType=TIMESTAMP}
+	</if>
+	<if test="createTime != null" >
+	    and create_time = #{createTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="updateTime != null" >
+	    and update_time = #{updateTime, jdbcType=TIMESTAMP}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.CommodityEnquiringEntity" useGeneratedKeys="true" keyProperty="enquiringId">
+  	insert into commodity_enquiring(
+		enquiring_content,
+		event_ts,
+		cmmdty_id,
+		party_id,
+		answerer,
+		answer,
+		answer_ts,
+		create_time,
+		update_time
+	) values (
+		#{enquiringContent, jdbcType=VARCHAR},
+		#{eventTs, jdbcType=TIMESTAMP},
+		#{cmmdtyId, jdbcType=DECIMAL},
+		#{partyId, jdbcType=DECIMAL},
+		#{answerer, jdbcType=VARCHAR},
+		#{answer, jdbcType=VARCHAR},
+		#{answerTs, jdbcType=TIMESTAMP},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.CommodityEnquiringEntity" >
+	update commodity_enquiring set 
+	<trim  suffixOverrides="," >
+		<if test="enquiringContent != null  and enquiringContent != '' ">
+			enquiring_content = #{enquiringContent, jdbcType=VARCHAR},
+		</if>
+		<if test="eventTs != null  ">
+			event_ts = #{eventTs, jdbcType=TIMESTAMP},
+		</if>
+		<if test="cmmdtyId != null  ">
+			cmmdty_id = #{cmmdtyId, jdbcType=DECIMAL},
+		</if>
+		<if test="partyId != null  ">
+			party_id = #{partyId, jdbcType=DECIMAL},
+		</if>
+		<if test="answerer != null  and answerer != '' ">
+			answerer = #{answerer, jdbcType=VARCHAR},
+		</if>
+		<if test="answer != null  and answer != '' ">
+			answer = #{answer, jdbcType=VARCHAR},
+		</if>
+		<if test="answerTs != null  ">
+			answer_ts = #{answerTs, jdbcType=TIMESTAMP},
+		</if>
+		<if test="createTime != null  ">
+			create_time = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null  ">
+			update_time = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+	</trim> 
+	where enquiring_id = #{enquiringId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.CommodityEnquiringEntity">
+	delete from commodity_enquiring where enquiring_id = #{enquiringId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.CommodityEnquiringTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from commodity_enquiring 
+    <include refid="Where_Clause"/>
+</select>
+
+<!-- 分页查询 -->
+<select id="listOfSummary" resultMap="SummaryResultMap"  parameterType="org.zyd.store.term.CommodityEnquiringTerm">
+	select 
+    <include refid="Summary_Column_List"/>
+    from commodity_enquiring c, party_account p
+    where c.party_id = p.party_id
+    and c.cmmdty_id = #{cmmdtyId, jdbcType=DECIMAL}
+    and p.acnt_type='A0800010'
+    <if test="sortField != null and sortField != ''" >
+		order by ${sortField} ${sortDir}
+	</if>
+	limit ${start},${pageSize}
+</select>
+  	
+<!-- 分页查询记录数 -->
+<select id="countOfSummary" resultType="int"  parameterType="org.zyd.store.term.CommodityEnquiringTerm">
+	select 
+    count(1)
+    from commodity_enquiring 
+    <include refid="Where_Clause"/>
+</select>
+
+</mapper>   

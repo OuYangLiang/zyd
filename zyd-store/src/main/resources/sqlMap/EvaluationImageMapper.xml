@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.EvaluationImageMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.EvaluationImageEntity" >
+	<id column="image_id" property="imageId" jdbcType="DECIMAL" />
+	<result column="eval_id" property="evalId" jdbcType="DECIMAL" />
+	<result column="image_seq" property="imageSeq" jdbcType="INTEGER" />
+	<result column="image_addrs" property="imageAddrs" jdbcType="VARCHAR" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+</resultMap>
+       
+<!-- evaluation_image table all fields -->
+<sql id="Base_Column_List" >
+	 image_id, eval_id, image_seq, image_addrs, create_time, update_time
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="imageId != null" >
+	    and image_id = #{imageId, jdbcType=DECIMAL}
+	</if>
+	<if test="evalId != null" >
+	    and eval_id = #{evalId, jdbcType=DECIMAL}
+	</if>
+	<if test="imageSeq != null" >
+	    and image_seq = #{imageSeq, jdbcType=INTEGER}
+	</if>
+	<if test="imageAddrs != null and imageAddrs != ''" >
+	    and image_addrs = #{imageAddrs, jdbcType=VARCHAR}
+	</if>
+	<if test="createTime != null" >
+	    and create_time = #{createTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="updateTime != null" >
+	    and update_time = #{updateTime, jdbcType=TIMESTAMP}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.EvaluationImageEntity" useGeneratedKeys="true" keyProperty="imageId">
+  	insert into evaluation_image(
+		eval_id,
+		image_seq,
+		image_addrs,
+		create_time,
+		update_time
+	) values (
+		#{evalId, jdbcType=DECIMAL},
+		#{imageSeq, jdbcType=INTEGER},
+		#{imageAddrs, jdbcType=VARCHAR},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.EvaluationImageEntity" >
+	update evaluation_image set 
+	<trim  suffixOverrides="," >
+		<if test="evalId != null  ">
+			eval_id = #{evalId, jdbcType=DECIMAL},
+		</if>
+		<if test="imageSeq != null  ">
+			image_seq = #{imageSeq, jdbcType=INTEGER},
+		</if>
+		<if test="imageAddrs != null  and imageAddrs != '' ">
+			image_addrs = #{imageAddrs, jdbcType=VARCHAR},
+		</if>
+		<if test="createTime != null  ">
+			create_time = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null  ">
+			update_time = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+	</trim> 
+	where image_id = #{imageId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.EvaluationImageEntity">
+	delete from evaluation_image where image_id = #{imageId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.EvaluationImageTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from evaluation_image 
+    <include refid="Where_Clause"/>
+</select>
+
+<!-- 查询根据字段排序 -->
+<select id="selectWithSort" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.EvaluationImageTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from evaluation_image 
+    <include refid="Where_Clause"/>
+    order by ${sortField} ${sortDir}
+</select>
+  	
+</mapper>   

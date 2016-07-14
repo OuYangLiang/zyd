@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.PartyLevelFactorMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.PartyLevelFactorEntity" >
+	<id column="factor_id" property="factorId" jdbcType="DECIMAL" />
+	<result column="factor" property="factor" jdbcType="VARCHAR" />
+	<result column="factor_val" property="factorVal" jdbcType="DECIMAL" />
+	<result column="party_id" property="partyId" jdbcType="DECIMAL" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+</resultMap>
+       
+<!-- party_level_factor table all fields -->
+<sql id="Base_Column_List" >
+	 factor_id, factor, factor_val, party_id, create_time, update_time
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="factorId != null" >
+	    and factor_id = #{factorId, jdbcType=DECIMAL}
+	</if>
+	<if test="factor != null and factor != ''" >
+	    and factor = #{factor, jdbcType=VARCHAR}
+	</if>
+	<if test="factorVal != null" >
+	    and factor_val = #{factorVal, jdbcType=DECIMAL}
+	</if>
+	<if test="partyId != null" >
+	    and party_id = #{partyId, jdbcType=DECIMAL}
+	</if>
+	<if test="createTime != null" >
+	    and create_time = #{createTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="updateTime != null" >
+	    and update_time = #{updateTime, jdbcType=TIMESTAMP}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.PartyLevelFactorEntity" useGeneratedKeys="true" keyProperty="factorId">
+  	insert into party_level_factor(
+		factor,
+		factor_val,
+		party_id,
+		create_time,
+		update_time
+	) values (
+		#{factor, jdbcType=VARCHAR},
+		#{factorVal, jdbcType=DECIMAL},
+		#{partyId, jdbcType=DECIMAL},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.PartyLevelFactorEntity" >
+	update party_level_factor set 
+	<trim  suffixOverrides="," >
+		<if test="factor != null  and factor != '' ">
+			factor = #{factor, jdbcType=VARCHAR},
+		</if>
+		<if test="factorVal != null  ">
+			factor_val = #{factorVal, jdbcType=DECIMAL},
+		</if>
+		<if test="partyId != null  ">
+			party_id = #{partyId, jdbcType=DECIMAL},
+		</if>
+		<if test="createTime != null  ">
+			create_time = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null  ">
+			update_time = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+	</trim> 
+	where factor_id = #{factorId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.PartyLevelFactorEntity">
+	delete from party_level_factor where factor_id = #{factorId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.PartyLevelFactorTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from party_level_factor 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

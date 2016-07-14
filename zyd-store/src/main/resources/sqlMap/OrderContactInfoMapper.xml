@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.OrderContactInfoMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.OrderContactInfoEntity" >
+	<result column="order_id" property="orderId" jdbcType="DECIMAL" />
+	<result column="cntct_name" property="cntctName" jdbcType="VARCHAR" />
+	<result column="cntct_mobile" property="cntctMobile" jdbcType="VARCHAR" />
+	<result column="cntct_country" property="cntctCountry" jdbcType="VARCHAR" />
+	<result column="cntct_state" property="cntctState" jdbcType="VARCHAR" />
+	<result column="cntct_city" property="cntctCity" jdbcType="VARCHAR" />
+	<result column="cntct_town" property="cntctTown" jdbcType="VARCHAR" />
+	<result column="cntct_street" property="cntctStreet" jdbcType="VARCHAR" />
+	<result column="cntct_address" property="cntctAddress" jdbcType="VARCHAR" />
+	<result column="cntct_post_code" property="cntctPostCode" jdbcType="VARCHAR" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+</resultMap>
+       
+<!-- order_contact_info table all fields -->
+<sql id="Base_Column_List" >
+	 order_id, cntct_name, cntct_mobile, cntct_country, cntct_state, cntct_city, cntct_town, cntct_street, cntct_address, cntct_post_code, create_time, update_time
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="orderId != null" >
+	    and order_id = #{orderId, jdbcType=DECIMAL}
+	</if>
+	<if test="cntctName != null and cntctName != ''" >
+	    and cntct_name = #{cntctName, jdbcType=VARCHAR}
+	</if>
+	<if test="cntctMobile != null and cntctMobile != ''" >
+	    and cntct_mobile = #{cntctMobile, jdbcType=VARCHAR}
+	</if>
+	<if test="cntctCountry != null and cntctCountry != ''" >
+	    and cntct_country = #{cntctCountry, jdbcType=VARCHAR}
+	</if>
+	<if test="cntctState != null and cntctState != ''" >
+	    and cntct_state = #{cntctState, jdbcType=VARCHAR}
+	</if>
+	<if test="cntctCity != null and cntctCity != ''" >
+	    and cntct_city = #{cntctCity, jdbcType=VARCHAR}
+	</if>
+	<if test="cntctTown != null and cntctTown != ''" >
+	    and cntct_town = #{cntctTown, jdbcType=VARCHAR}
+	</if>
+	<if test="cntctStreet != null and cntctStreet != ''" >
+	    and cntct_street = #{cntctStreet, jdbcType=VARCHAR}
+	</if>
+	<if test="cntctAddress != null and cntctAddress != ''" >
+	    and cntct_address = #{cntctAddress, jdbcType=VARCHAR}
+	</if>
+	<if test="cntctPostCode != null and cntctPostCode != ''" >
+	    and cntct_post_code = #{cntctPostCode, jdbcType=VARCHAR}
+	</if>
+	<if test="createTime != null" >
+	    and create_time = #{createTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="updateTime != null" >
+	    and update_time = #{updateTime, jdbcType=TIMESTAMP}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.OrderContactInfoEntity" >
+  	insert into order_contact_info(
+		order_id,
+		cntct_name,
+		cntct_mobile,
+		cntct_country,
+		cntct_state,
+		cntct_city,
+		cntct_town,
+		cntct_street,
+		cntct_address,
+		cntct_post_code,
+		create_time,
+		update_time
+	) values (
+		#{orderId, jdbcType=DECIMAL},
+		#{cntctName, jdbcType=VARCHAR},
+		#{cntctMobile, jdbcType=VARCHAR},
+		#{cntctCountry, jdbcType=VARCHAR},
+		#{cntctState, jdbcType=VARCHAR},
+		#{cntctCity, jdbcType=VARCHAR},
+		#{cntctTown, jdbcType=VARCHAR},
+		#{cntctStreet, jdbcType=VARCHAR},
+		#{cntctAddress, jdbcType=VARCHAR},
+		#{cntctPostCode, jdbcType=VARCHAR},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.OrderContactInfoEntity" >
+	update order_contact_info set 
+	<trim  suffixOverrides="," >
+		<if test="cntctName != null  and cntctName != '' ">
+			cntct_name = #{cntctName, jdbcType=VARCHAR},
+		</if>
+		<if test="cntctMobile != null  and cntctMobile != '' ">
+			cntct_mobile = #{cntctMobile, jdbcType=VARCHAR},
+		</if>
+		<if test="cntctCountry != null  and cntctCountry != '' ">
+			cntct_country = #{cntctCountry, jdbcType=VARCHAR},
+		</if>
+		<if test="cntctState != null  and cntctState != '' ">
+			cntct_state = #{cntctState, jdbcType=VARCHAR},
+		</if>
+		<if test="cntctCity != null  and cntctCity != '' ">
+			cntct_city = #{cntctCity, jdbcType=VARCHAR},
+		</if>
+		<if test="cntctTown != null  and cntctTown != '' ">
+			cntct_town = #{cntctTown, jdbcType=VARCHAR},
+		</if>
+		<if test="cntctStreet != null  and cntctStreet != '' ">
+			cntct_street = #{cntctStreet, jdbcType=VARCHAR},
+		</if>
+		<if test="cntctAddress != null  and cntctAddress != '' ">
+			cntct_address = #{cntctAddress, jdbcType=VARCHAR},
+		</if>
+		<if test="cntctPostCode != null  and cntctPostCode != '' ">
+			cntct_post_code = #{cntctPostCode, jdbcType=VARCHAR},
+		</if>
+		<if test="createTime != null  ">
+			create_time = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null  ">
+			update_time = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+	</trim> 
+	where order_id = #{orderId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.OrderContactInfoEntity">
+	delete from order_contact_info where order_id = #{orderId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.OrderContactInfoTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from order_contact_info 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

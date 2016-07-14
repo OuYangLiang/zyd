@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.BoutiqueMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.BoutiqueEntity" >
+	<result column="cmmdty_id" property="cmmdtyId" jdbcType="DECIMAL" />
+	<result column="category" property="category" jdbcType="VARCHAR" />
+	<result column="cmmdty_name" property="cmmdtyName" jdbcType="VARCHAR" />
+	<result column="cmmdty_num" property="cmmdtyNum" jdbcType="VARCHAR" />
+	<result column="cmmdty_desc" property="cmmdtyDesc" jdbcType="VARCHAR" />
+	<result column="num_stored" property="numStored" jdbcType="INTEGER" />
+	<result column="num_sales" property="numSales" jdbcType="INTEGER" />
+	<result column="num_evaluated" property="numEvaluated" jdbcType="INTEGER" />
+	<result column="num_enquired" property="numEnquired" jdbcType="INTEGER" />
+	<result column="proposed_price" property="proposedPrice" jdbcType="DECIMAL" />
+	<result column="current_price" property="currentPrice" jdbcType="DECIMAL" />
+	<result column="shelves_time" property="shelvesTime" jdbcType="DATE" />
+	<result column="unshelves_time" property="unshelvesTime" jdbcType="DATE" />
+	<result column="default_image_addrs" property="defaultImageAddrs" jdbcType="VARCHAR" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+</resultMap>
+       
+<!-- boutique table all fields -->
+<sql id="Base_Column_List" >
+	 cmmdty_id, category, cmmdty_name, cmmdty_num, cmmdty_desc, num_stored, num_sales, num_evaluated, num_enquired, proposed_price, current_price, shelves_time, unshelves_time, default_image_addrs, create_time, update_time
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="cmmdtyId != null" >
+	    and cmmdty_id = #{cmmdtyId, jdbcType=DECIMAL}
+	</if>
+	<if test="category != null and category != ''" >
+	    and category = #{category, jdbcType=VARCHAR}
+	</if>
+	<if test="cmmdtyName != null and cmmdtyName != ''" >
+	    and cmmdty_name = #{cmmdtyName, jdbcType=VARCHAR}
+	</if>
+	<if test="cmmdtyNum != null and cmmdtyNum != ''" >
+	    and cmmdty_num = #{cmmdtyNum, jdbcType=VARCHAR}
+	</if>
+	<if test="cmmdtyDesc != null and cmmdtyDesc != ''" >
+	    and cmmdty_desc = #{cmmdtyDesc, jdbcType=VARCHAR}
+	</if>
+	<if test="numStored != null" >
+	    and num_stored = #{numStored, jdbcType=INTEGER}
+	</if>
+	<if test="numSales != null" >
+	    and num_sales = #{numSales, jdbcType=INTEGER}
+	</if>
+	<if test="numEvaluated != null" >
+	    and num_evaluated = #{numEvaluated, jdbcType=INTEGER}
+	</if>
+	<if test="numEnquired != null" >
+        and num_enquired = #{numEnquired, jdbcType=INTEGER}
+    </if>
+	<if test="proposedPrice != null" >
+	    and proposed_price = #{proposedPrice, jdbcType=DECIMAL}
+	</if>
+	<if test="currentPrice != null" >
+	    and current_price = #{currentPrice, jdbcType=DECIMAL}
+	</if>
+	<if test="shelvesTime != null" >
+	    and shelves_time = #{shelvesTime, jdbcType=DATE}
+	</if>
+	<if test="unshelvesTime != null" >
+	    and unshelves_time = #{unshelvesTime, jdbcType=DATE}
+	</if>
+	<if test="defaultImageAddrs != null and defaultImageAddrs != ''" >
+	    and default_image_addrs = #{defaultImageAddrs, jdbcType=VARCHAR}
+	</if>
+	<if test="createTime != null" >
+	    and create_time = #{createTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="updateTime != null" >
+	    and update_time = #{updateTime, jdbcType=TIMESTAMP}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.BoutiqueEntity" >
+  	insert into boutique(
+		cmmdty_id,
+		category,
+		cmmdty_name,
+		cmmdty_num,
+		cmmdty_desc,
+		num_stored,
+		num_sales,
+		num_evaluated,
+		num_enquired,
+		proposed_price,
+		current_price,
+		shelves_time,
+		unshelves_time,
+		default_image_addrs,
+		create_time,
+		update_time
+	) values (
+		#{cmmdtyId, jdbcType=DECIMAL},
+		#{category, jdbcType=VARCHAR},
+		#{cmmdtyName, jdbcType=VARCHAR},
+		#{cmmdtyNum, jdbcType=VARCHAR},
+		#{cmmdtyDesc, jdbcType=VARCHAR},
+		#{numStored, jdbcType=INTEGER},
+		#{numSales, jdbcType=INTEGER},
+		#{numEvaluated, jdbcType=INTEGER},
+		#{numEnquired, jdbcType=INTEGER},
+		#{proposedPrice, jdbcType=DECIMAL},
+		#{currentPrice, jdbcType=DECIMAL},
+		#{shelvesTime, jdbcType=DATE},
+		#{unshelvesTime, jdbcType=DATE},
+		#{defaultImageAddrs, jdbcType=VARCHAR},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.BoutiqueEntity" >
+	update boutique set 
+	<trim  suffixOverrides="," >
+		<if test="category != null  and category != '' ">
+			category = #{category, jdbcType=VARCHAR},
+		</if>
+		<if test="cmmdtyName != null  and cmmdtyName != '' ">
+			cmmdty_name = #{cmmdtyName, jdbcType=VARCHAR},
+		</if>
+		<if test="cmmdtyNum != null  and cmmdtyNum != '' ">
+			cmmdty_num = #{cmmdtyNum, jdbcType=VARCHAR},
+		</if>
+		<if test="cmmdtyDesc != null  and cmmdtyDesc != '' ">
+			cmmdty_desc = #{cmmdtyDesc, jdbcType=VARCHAR},
+		</if>
+		<if test="numStored != null  ">
+			num_stored = #{numStored, jdbcType=INTEGER},
+		</if>
+		<if test="numSales != null  ">
+			num_sales = #{numSales, jdbcType=INTEGER},
+		</if>
+		<if test="numEvaluated != null  ">
+			num_evaluated = #{numEvaluated, jdbcType=INTEGER},
+		</if>
+		<if test="numEnquired != null  ">
+            num_enquired = #{numEnquired, jdbcType=INTEGER},
+        </if>
+		<if test="proposedPrice != null  ">
+			proposed_price = #{proposedPrice, jdbcType=DECIMAL},
+		</if>
+		<if test="currentPrice != null  ">
+			current_price = #{currentPrice, jdbcType=DECIMAL},
+		</if>
+		<if test="shelvesTime != null  ">
+			shelves_time = #{shelvesTime, jdbcType=DATE},
+		</if>
+		<if test="unshelvesTime != null  ">
+			unshelves_time = #{unshelvesTime, jdbcType=DATE},
+		</if>
+		<if test="defaultImageAddrs != null  and defaultImageAddrs != '' ">
+			default_image_addrs = #{defaultImageAddrs, jdbcType=VARCHAR},
+		</if>
+		<if test="createTime != null  ">
+			create_time = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null  ">
+			update_time = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+	</trim> 
+	where cmmdty_id = #{cmmdtyId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.BoutiqueEntity">
+	delete from boutique where cmmdty_id = #{cmmdtyId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.BoutiqueTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from boutique 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

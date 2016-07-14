@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/pages/decorator">
+    <excludes>
+        <pattern>/login*</pattern>
+        <pattern>/register</pattern>
+        <pattern>/exception</pattern>
+        <pattern>/teapot/async/*</pattern>
+        <pattern>/party/cart/*</pattern>
+        <pattern>/order/*</pattern>
+    </excludes>
+
+    <decorator name="default" page="main.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+</decorators>

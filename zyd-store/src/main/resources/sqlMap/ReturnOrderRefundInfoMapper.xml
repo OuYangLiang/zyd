@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.ReturnOrderRefundInfoMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.ReturnOrderRefundInfoEntity" >
+	<result column="return_order_id" property="returnOrderId" jdbcType="DECIMAL" />
+	<result column="submit_time" property="submitTime" jdbcType="TIMESTAMP" />
+	<result column="refund_method" property="refundMethod" jdbcType="VARCHAR" />
+	<result column="refund_channel" property="refundChannel" jdbcType="VARCHAR" />
+	<result column="refund_account" property="refundAccount" jdbcType="VARCHAR" />
+	<result column="refund_num" property="refundNum" jdbcType="VARCHAR" />
+	<result column="refund_amt" property="refundAmt" jdbcType="DECIMAL" />
+	<result column="refund_time" property="refundTime" jdbcType="TIMESTAMP" />
+	<result column="refund_status" property="refundStatus" jdbcType="VARCHAR" />
+	<result column="party_id" property="partyId" jdbcType="DECIMAL" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+</resultMap>
+       
+<!-- return_order_refund_info table all fields -->
+<sql id="Base_Column_List" >
+	 return_order_id, submit_time, refund_method, refund_channel, refund_account, refund_num, refund_amt, refund_time, refund_status, party_id, create_time, update_time
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="returnOrderId != null" >
+	    and return_order_id = #{returnOrderId, jdbcType=DECIMAL}
+	</if>
+	<if test="submitTime != null" >
+	    and submit_time = #{submitTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="refundMethod != null and refundMethod != ''" >
+	    and refund_method = #{refundMethod, jdbcType=VARCHAR}
+	</if>
+	<if test="refundChannel != null and refundChannel != ''" >
+	    and refund_channel = #{refundChannel, jdbcType=VARCHAR}
+	</if>
+	<if test="refundAccount != null and refundAccount != ''" >
+	    and refund_account = #{refundAccount, jdbcType=VARCHAR}
+	</if>
+	<if test="refundNum != null and refundNum != ''" >
+	    and refund_num = #{refundNum, jdbcType=VARCHAR}
+	</if>
+	<if test="refundAmt != null" >
+	    and refund_amt = #{refundAmt, jdbcType=DECIMAL}
+	</if>
+	<if test="refundTime != null" >
+	    and refund_time = #{refundTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="refundStatus != null and refundStatus != ''" >
+	    and refund_status = #{refundStatus, jdbcType=VARCHAR}
+	</if>
+	<if test="partyId != null" >
+	    and party_id = #{partyId, jdbcType=DECIMAL}
+	</if>
+	<if test="createTime != null" >
+	    and create_time = #{createTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="updateTime != null" >
+	    and update_time = #{updateTime, jdbcType=TIMESTAMP}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.ReturnOrderRefundInfoEntity" >
+  	insert into return_order_refund_info(
+		return_order_id,
+		submit_time,
+		refund_method,
+		refund_channel,
+		refund_account,
+		refund_num,
+		refund_amt,
+		refund_time,
+		refund_status,
+		party_id,
+		create_time,
+		update_time
+	) values (
+		#{returnOrderId, jdbcType=DECIMAL},
+		#{submitTime, jdbcType=TIMESTAMP},
+		#{refundMethod, jdbcType=VARCHAR},
+		#{refundChannel, jdbcType=VARCHAR},
+		#{refundAccount, jdbcType=VARCHAR},
+		#{refundNum, jdbcType=VARCHAR},
+		#{refundAmt, jdbcType=DECIMAL},
+		#{refundTime, jdbcType=TIMESTAMP},
+		#{refundStatus, jdbcType=VARCHAR},
+		#{partyId, jdbcType=DECIMAL},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.ReturnOrderRefundInfoEntity" >
+	update return_order_refund_info set 
+	<trim  suffixOverrides="," >
+		<if test="submitTime != null  ">
+			submit_time = #{submitTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="refundMethod != null  and refundMethod != '' ">
+			refund_method = #{refundMethod, jdbcType=VARCHAR},
+		</if>
+		<if test="refundChannel != null  and refundChannel != '' ">
+			refund_channel = #{refundChannel, jdbcType=VARCHAR},
+		</if>
+		<if test="refundAccount != null  and refundAccount != '' ">
+			refund_account = #{refundAccount, jdbcType=VARCHAR},
+		</if>
+		<if test="refundNum != null  and refundNum != '' ">
+			refund_num = #{refundNum, jdbcType=VARCHAR},
+		</if>
+		<if test="refundAmt != null  ">
+			refund_amt = #{refundAmt, jdbcType=DECIMAL},
+		</if>
+		<if test="refundTime != null  ">
+			refund_time = #{refundTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="refundStatus != null  and refundStatus != '' ">
+			refund_status = #{refundStatus, jdbcType=VARCHAR},
+		</if>
+		<if test="partyId != null  ">
+			party_id = #{partyId, jdbcType=DECIMAL},
+		</if>
+		<if test="createTime != null  ">
+			create_time = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null  ">
+			update_time = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+	</trim> 
+	where return_order_id = #{returnOrderId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.ReturnOrderRefundInfoEntity">
+	delete from return_order_refund_info where return_order_id = #{returnOrderId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.ReturnOrderRefundInfoTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from return_order_refund_info 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

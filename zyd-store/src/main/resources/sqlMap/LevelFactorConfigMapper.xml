@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.LevelFactorConfigMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.LevelFactorConfigEntity" >
+	<result column="level" property="level" jdbcType="VARCHAR" />
+	<result column="factor" property="factor" jdbcType="VARCHAR" />
+	<result column="factor_val" property="factorVal" jdbcType="DECIMAL" />
+</resultMap>
+       
+<!-- level_factor_config table all fields -->
+<sql id="Base_Column_List" >
+	 level, factor, factor_val
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="level != null and level != ''" >
+	    and level = #{level, jdbcType=VARCHAR}
+	</if>
+	<if test="factor != null and factor != ''" >
+	    and factor = #{factor, jdbcType=VARCHAR}
+	</if>
+	<if test="factorVal != null" >
+	    and factor_val = #{factorVal, jdbcType=DECIMAL}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.LevelFactorConfigEntity" >
+  	insert into level_factor_config(
+		level,
+		factor,
+		factor_val
+	) values (
+		#{level, jdbcType=VARCHAR},
+		#{factor, jdbcType=VARCHAR},
+		#{factorVal, jdbcType=DECIMAL}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.LevelFactorConfigEntity" >
+	update level_factor_config set 
+	<trim  suffixOverrides="," >
+		<if test="factor != null  and factor != '' ">
+			factor = #{factor, jdbcType=VARCHAR},
+		</if>
+		<if test="factorVal != null  ">
+			factor_val = #{factorVal, jdbcType=DECIMAL},
+		</if>
+	</trim> 
+	where level = #{level, jdbcType=VARCHAR}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.LevelFactorConfigEntity">
+	delete from level_factor_config where level = #{level}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.LevelFactorConfigTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from level_factor_config 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

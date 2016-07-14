@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.PartyLevelDetailMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.PartyLevelDetailEntity" >
+	<id column="detail_id" property="detailId" jdbcType="DECIMAL" />
+	<result column="scenario" property="scenario" jdbcType="VARCHAR" />
+	<result column="event_ts" property="eventTs" jdbcType="TIMESTAMP" />
+	<result column="order_num" property="orderNum" jdbcType="VARCHAR" />
+	<result column="return_order_num" property="returnOrderNum" jdbcType="VARCHAR" />
+	<result column="order_amt" property="orderAmt" jdbcType="DECIMAL" />
+	<result column="factor" property="factor" jdbcType="VARCHAR" />
+	<result column="change_qty" property="changeQty" jdbcType="DECIMAL" />
+	<result column="balance_before" property="balanceBefore" jdbcType="DECIMAL" />
+	<result column="party_id" property="partyId" jdbcType="DECIMAL" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+</resultMap>
+       
+<!-- party_level_detail table all fields -->
+<sql id="Base_Column_List" >
+	 detail_id, scenario, event_ts, order_num, return_order_num, order_amt, factor, change_qty, balance_before, party_id, create_time, update_time
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="detailId != null" >
+	    and detail_id = #{detailId, jdbcType=DECIMAL}
+	</if>
+	<if test="scenario != null and scenario != ''" >
+	    and scenario = #{scenario, jdbcType=VARCHAR}
+	</if>
+	<if test="eventTs != null" >
+	    and event_ts = #{eventTs, jdbcType=TIMESTAMP}
+	</if>
+	<if test="orderNum != null and orderNum != ''" >
+	    and order_num = #{orderNum, jdbcType=VARCHAR}
+	</if>
+	<if test="returnOrderNum != null and returnOrderNum != ''" >
+	    and return_order_num = #{returnOrderNum, jdbcType=VARCHAR}
+	</if>
+	<if test="orderAmt != null" >
+	    and order_amt = #{orderAmt, jdbcType=DECIMAL}
+	</if>
+	<if test="factor != null and factor != ''" >
+	    and factor = #{factor, jdbcType=VARCHAR}
+	</if>
+	<if test="changeQty != null" >
+	    and change_qty = #{changeQty, jdbcType=DECIMAL}
+	</if>
+	<if test="balanceBefore != null" >
+	    and balance_before = #{balanceBefore, jdbcType=DECIMAL}
+	</if>
+	<if test="partyId != null" >
+	    and party_id = #{partyId, jdbcType=DECIMAL}
+	</if>
+	<if test="createTime != null" >
+	    and create_time = #{createTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="updateTime != null" >
+	    and update_time = #{updateTime, jdbcType=TIMESTAMP}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.PartyLevelDetailEntity" useGeneratedKeys="true" keyProperty="detailId">
+  	insert into party_level_detail(
+		scenario,
+		event_ts,
+		order_num,
+		return_order_num,
+		order_amt,
+		factor,
+		change_qty,
+		balance_before,
+		party_id,
+		create_time,
+		update_time
+	) values (
+		#{scenario, jdbcType=VARCHAR},
+		#{eventTs, jdbcType=TIMESTAMP},
+		#{orderNum, jdbcType=VARCHAR},
+		#{returnOrderNum, jdbcType=VARCHAR},
+		#{orderAmt, jdbcType=DECIMAL},
+		#{factor, jdbcType=VARCHAR},
+		#{changeQty, jdbcType=DECIMAL},
+		#{balanceBefore, jdbcType=DECIMAL},
+		#{partyId, jdbcType=DECIMAL},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.PartyLevelDetailEntity" >
+	update party_level_detail set 
+	<trim  suffixOverrides="," >
+		<if test="scenario != null  and scenario != '' ">
+			scenario = #{scenario, jdbcType=VARCHAR},
+		</if>
+		<if test="eventTs != null  ">
+			event_ts = #{eventTs, jdbcType=TIMESTAMP},
+		</if>
+		<if test="orderNum != null  and orderNum != '' ">
+			order_num = #{orderNum, jdbcType=VARCHAR},
+		</if>
+		<if test="returnOrderNum != null  and returnOrderNum != '' ">
+			return_order_num = #{returnOrderNum, jdbcType=VARCHAR},
+		</if>
+		<if test="orderAmt != null  ">
+			order_amt = #{orderAmt, jdbcType=DECIMAL},
+		</if>
+		<if test="factor != null  and factor != '' ">
+			factor = #{factor, jdbcType=VARCHAR},
+		</if>
+		<if test="changeQty != null  ">
+			change_qty = #{changeQty, jdbcType=DECIMAL},
+		</if>
+		<if test="balanceBefore != null  ">
+			balance_before = #{balanceBefore, jdbcType=DECIMAL},
+		</if>
+		<if test="partyId != null  ">
+			party_id = #{partyId, jdbcType=DECIMAL},
+		</if>
+		<if test="createTime != null  ">
+			create_time = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null  ">
+			update_time = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+	</trim> 
+	where detail_id = #{detailId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.PartyLevelDetailEntity">
+	delete from party_level_detail where detail_id = #{detailId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.PartyLevelDetailTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from party_level_detail 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

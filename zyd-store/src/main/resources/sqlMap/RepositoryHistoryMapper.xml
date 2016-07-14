@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.RepositoryHistoryMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.RepositoryHistoryEntity" >
+	<id column="his_id" property="hisId" jdbcType="DECIMAL" />
+	<result column="chg_type" property="chgType" jdbcType="VARCHAR" />
+	<result column="event_ts" property="eventTs" jdbcType="TIMESTAMP" />
+	<result column="num_stored_before" property="numStoredBefore" jdbcType="INTEGER" />
+	<result column="chg_qty" property="chgQty" jdbcType="INTEGER" />
+	<result column="unit_price" property="unitPrice" jdbcType="DECIMAL" />
+	<result column="total_price" property="totalPrice" jdbcType="DECIMAL" />
+	<result column="operator" property="operator" jdbcType="VARCHAR" />
+	<result column="cmmdty_id" property="cmmdtyId" jdbcType="DECIMAL" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+</resultMap>
+       
+<!-- repository_history table all fields -->
+<sql id="Base_Column_List" >
+	 his_id, chg_type, event_ts, num_stored_before, chg_qty, unit_price, total_price, operator, cmmdty_id, create_time, update_time
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="hisId != null" >
+	    and his_id = #{hisId, jdbcType=DECIMAL}
+	</if>
+	<if test="chgType != null and chgType != ''" >
+	    and chg_type = #{chgType, jdbcType=VARCHAR}
+	</if>
+	<if test="eventTs != null" >
+	    and event_ts = #{eventTs, jdbcType=TIMESTAMP}
+	</if>
+	<if test="numStoredBefore != null" >
+	    and num_stored_before = #{numStoredBefore, jdbcType=INTEGER}
+	</if>
+	<if test="chgQty != null" >
+	    and chg_qty = #{chgQty, jdbcType=INTEGER}
+	</if>
+	<if test="unitPrice != null" >
+	    and unit_price = #{unitPrice, jdbcType=DECIMAL}
+	</if>
+	<if test="totalPrice != null" >
+	    and total_price = #{totalPrice, jdbcType=DECIMAL}
+	</if>
+	<if test="operator != null and operator != ''" >
+	    and operator = #{operator, jdbcType=VARCHAR}
+	</if>
+	<if test="cmmdtyId != null" >
+	    and cmmdty_id = #{cmmdtyId, jdbcType=DECIMAL}
+	</if>
+	<if test="createTime != null" >
+	    and create_time = #{createTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="updateTime != null" >
+	    and update_time = #{updateTime, jdbcType=TIMESTAMP}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.RepositoryHistoryEntity" useGeneratedKeys="true" keyProperty="hisId">
+  	insert into repository_history(
+		chg_type,
+		event_ts,
+		num_stored_before,
+		chg_qty,
+		unit_price,
+		total_price,
+		operator,
+		cmmdty_id,
+		create_time,
+		update_time
+	) values (
+		#{chgType, jdbcType=VARCHAR},
+		#{eventTs, jdbcType=TIMESTAMP},
+		#{numStoredBefore, jdbcType=INTEGER},
+		#{chgQty, jdbcType=INTEGER},
+		#{unitPrice, jdbcType=DECIMAL},
+		#{totalPrice, jdbcType=DECIMAL},
+		#{operator, jdbcType=VARCHAR},
+		#{cmmdtyId, jdbcType=DECIMAL},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.RepositoryHistoryEntity" >
+	update repository_history set 
+	<trim  suffixOverrides="," >
+		<if test="chgType != null  and chgType != '' ">
+			chg_type = #{chgType, jdbcType=VARCHAR},
+		</if>
+		<if test="eventTs != null  ">
+			event_ts = #{eventTs, jdbcType=TIMESTAMP},
+		</if>
+		<if test="numStoredBefore != null  ">
+			num_stored_before = #{numStoredBefore, jdbcType=INTEGER},
+		</if>
+		<if test="chgQty != null  ">
+			chg_qty = #{chgQty, jdbcType=INTEGER},
+		</if>
+		<if test="unitPrice != null  ">
+			unit_price = #{unitPrice, jdbcType=DECIMAL},
+		</if>
+		<if test="totalPrice != null  ">
+			total_price = #{totalPrice, jdbcType=DECIMAL},
+		</if>
+		<if test="operator != null  and operator != '' ">
+			operator = #{operator, jdbcType=VARCHAR},
+		</if>
+		<if test="cmmdtyId != null  ">
+			cmmdty_id = #{cmmdtyId, jdbcType=DECIMAL},
+		</if>
+		<if test="createTime != null  ">
+			create_time = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null  ">
+			update_time = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+	</trim> 
+	where his_id = #{hisId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.RepositoryHistoryEntity">
+	delete from repository_history where his_id = #{hisId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.RepositoryHistoryTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from repository_history 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

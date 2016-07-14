@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.CollectedListMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.CollectedListEntity" >
+	<id column="collected_id" property="collectedId" jdbcType="DECIMAL" />
+	<result column="party_id" property="partyId" jdbcType="DECIMAL" />
+	<result column="cmmdty_id" property="cmmdtyId" jdbcType="DECIMAL" />
+	<result column="collected_time" property="collectedTime" jdbcType="TIMESTAMP" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+</resultMap>
+       
+<!-- collected_list table all fields -->
+<sql id="Base_Column_List" >
+	 collected_id, party_id, cmmdty_id, collected_time, create_time, update_time
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="collectedId != null" >
+	    and collected_id = #{collectedId, jdbcType=DECIMAL}
+	</if>
+	<if test="partyId != null" >
+	    and party_id = #{partyId, jdbcType=DECIMAL}
+	</if>
+	<if test="cmmdtyId != null" >
+	    and cmmdty_id = #{cmmdtyId, jdbcType=DECIMAL}
+	</if>
+	<if test="collectedTime != null" >
+	    and collected_time = #{collectedTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="createTime != null" >
+	    and create_time = #{createTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="updateTime != null" >
+	    and update_time = #{updateTime, jdbcType=TIMESTAMP}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.CollectedListEntity" useGeneratedKeys="true" keyProperty="collectedId">
+  	insert into collected_list(
+		party_id,
+		cmmdty_id,
+		collected_time,
+		create_time,
+		update_time
+	) values (
+		#{partyId, jdbcType=DECIMAL},
+		#{cmmdtyId, jdbcType=DECIMAL},
+		#{collectedTime, jdbcType=TIMESTAMP},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.CollectedListEntity" >
+	update collected_list set 
+	<trim  suffixOverrides="," >
+		<if test="partyId != null  ">
+			party_id = #{partyId, jdbcType=DECIMAL},
+		</if>
+		<if test="cmmdtyId != null  ">
+			cmmdty_id = #{cmmdtyId, jdbcType=DECIMAL},
+		</if>
+		<if test="collectedTime != null  ">
+			collected_time = #{collectedTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="createTime != null  ">
+			create_time = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null  ">
+			update_time = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+	</trim> 
+	where collected_id = #{collectedId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.CollectedListEntity">
+	delete from collected_list where collected_id = #{collectedId}
+</update>
+
+<!-- 根据用户id及商品id删除收藏商品 -->
+<update id="deleteByPartyIdAndCmmdtyId" parameterType="org.zyd.store.entity.CollectedListEntity">
+	delete from collected_list where party_id = #{partyId} and cmmdty_id = #{cmmdtyId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.CollectedListTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from collected_list 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

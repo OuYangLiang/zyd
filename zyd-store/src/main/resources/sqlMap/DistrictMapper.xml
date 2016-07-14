@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.DistrictMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.DistrictEntity" >
+	<id column="dis_id" property="disId" jdbcType="INTEGER" />
+	<result column="dis_name" property="disName" jdbcType="VARCHAR" />
+	<result column="city_id" property="cityId" jdbcType="INTEGER" />
+</resultMap>
+       
+<!-- district table all fields -->
+<sql id="Base_Column_List" >
+	 dis_id, dis_name, city_id
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="disId != null" >
+	    and dis_id = #{disId, jdbcType=INTEGER}
+	</if>
+	 	<if test="disName != null and disName != ''" >
+	    and dis_name = #{disName, jdbcType=VARCHAR}
+	</if>
+	<if test="cityId != null" >
+	    and city_id = #{cityId, jdbcType=INTEGER}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.DistrictEntity" useGeneratedKeys="true" keyProperty="disId">
+  	insert into district(
+		dis_name,
+		city_id
+	) values (
+		#{disName, jdbcType=VARCHAR},
+		#{cityId, jdbcType=INTEGER}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.DistrictEntity" >
+	update district set 
+	<trim  suffixOverrides="," >
+		<if test="disName != null  and disName != '' ">
+			dis_name = #{disName, jdbcType=VARCHAR},
+		</if>
+		<if test="cityId != null  ">
+			city_id = #{cityId, jdbcType=INTEGER},
+		</if>
+	</trim> 
+	where dis_id = #{disId, jdbcType=INTEGER}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.DistrictEntity">
+	delete from district where dis_id = #{disId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.DistrictTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from district 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

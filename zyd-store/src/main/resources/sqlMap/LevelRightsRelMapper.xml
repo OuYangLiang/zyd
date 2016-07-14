@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.LevelRightsRelMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.LevelRightsRelEntity" >
+	<result column="level" property="level" jdbcType="VARCHAR" />
+	<result column="rights" property="rights" jdbcType="VARCHAR" />
+	<result column="level_rights_rate" property="levelRightsRate" jdbcType="DECIMAL" />
+	<result column="limit_times" property="limitTimes" jdbcType="INTEGER" />
+	<result column="limit_val" property="limitVal" jdbcType="DECIMAL" />
+</resultMap>
+       
+<!-- level_rights_rel table all fields -->
+<sql id="Base_Column_List" >
+	 level, rights, level_rights_rate, limit_times, limit_val
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="level != null and level != ''" >
+	    and level = #{level, jdbcType=VARCHAR}
+	</if>
+	<if test="rights != null and rights != ''" >
+	    and rights = #{rights, jdbcType=VARCHAR}
+	</if>
+	<if test="levelRightsRate != null" >
+	    and level_rights_rate = #{levelRightsRate, jdbcType=DECIMAL}
+	</if>
+	<if test="limitTimes != null" >
+	    and limit_times = #{limitTimes, jdbcType=INTEGER}
+	</if>
+	<if test="limitVal != null" >
+	    and limit_val = #{limitVal, jdbcType=DECIMAL}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.LevelRightsRelEntity" >
+  	insert into level_rights_rel(
+		level,
+		rights,
+		level_rights_rate,
+		limit_times,
+		limit_val
+	) values (
+		#{level, jdbcType=VARCHAR},
+		#{rights, jdbcType=VARCHAR},
+		#{levelRightsRate, jdbcType=DECIMAL},
+		#{limitTimes, jdbcType=INTEGER},
+		#{limitVal, jdbcType=DECIMAL}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.LevelRightsRelEntity" >
+	update level_rights_rel set 
+	<trim  suffixOverrides="," >
+		<if test="rights != null  and rights != '' ">
+			rights = #{rights, jdbcType=VARCHAR},
+		</if>
+		<if test="levelRightsRate != null  ">
+			level_rights_rate = #{levelRightsRate, jdbcType=DECIMAL},
+		</if>
+		<if test="limitTimes != null  ">
+			limit_times = #{limitTimes, jdbcType=INTEGER},
+		</if>
+		<if test="limitVal != null  ">
+			limit_val = #{limitVal, jdbcType=DECIMAL},
+		</if>
+	</trim> 
+	where level = #{level, jdbcType=VARCHAR}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.LevelRightsRelEntity">
+	delete from level_rights_rel where level = #{level}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.LevelRightsRelTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from level_rights_rel 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

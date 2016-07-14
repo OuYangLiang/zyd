@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.ShoppingCartMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.ShoppingCartEntity" >
+	<id column="shopping_id" property="shoppingId" jdbcType="DECIMAL" />
+	<result column="party_id" property="partyId" jdbcType="DECIMAL" />
+	<result column="cmmdty_id" property="cmmdtyId" jdbcType="DECIMAL" />
+	<result column="qty_to_buy" property="qtyToBuy" jdbcType="INTEGER" />
+	<result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+</resultMap>
+       
+<!-- shopping_cart table all fields -->
+<sql id="Base_Column_List" >
+	 shopping_id, party_id, cmmdty_id, qty_to_buy, add_time, create_time, update_time
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="shoppingId != null" >
+	    and shopping_id = #{shoppingId, jdbcType=DECIMAL}
+	</if>
+	<if test="partyId != null" >
+	    and party_id = #{partyId, jdbcType=DECIMAL}
+	</if>
+	<if test="cmmdtyId != null" >
+	    and cmmdty_id = #{cmmdtyId, jdbcType=DECIMAL}
+	</if>
+	<if test="qtyToBuy != null" >
+	    and qty_to_buy = #{qtyToBuy, jdbcType=INTEGER}
+	</if>
+	<if test="addTime != null" >
+	    and add_time = #{addTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="createTime != null" >
+	    and create_time = #{createTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="updateTime != null" >
+	    and update_time = #{updateTime, jdbcType=TIMESTAMP}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.ShoppingCartEntity" useGeneratedKeys="true" keyProperty="shoppingId">
+  	insert into shopping_cart(
+		party_id,
+		cmmdty_id,
+		qty_to_buy,
+		add_time,
+		create_time,
+		update_time
+	) values (
+		#{partyId, jdbcType=DECIMAL},
+		#{cmmdtyId, jdbcType=DECIMAL},
+		#{qtyToBuy, jdbcType=INTEGER},
+		#{addTime, jdbcType=TIMESTAMP},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.ShoppingCartEntity" >
+	update shopping_cart set 
+	<trim  suffixOverrides="," >
+		<if test="partyId != null  ">
+			party_id = #{partyId, jdbcType=DECIMAL},
+		</if>
+		<if test="cmmdtyId != null  ">
+			cmmdty_id = #{cmmdtyId, jdbcType=DECIMAL},
+		</if>
+		<if test="qtyToBuy != null  ">
+			qty_to_buy = #{qtyToBuy, jdbcType=INTEGER},
+		</if>
+		<if test="addTime != null  ">
+			add_time = #{addTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="createTime != null  ">
+			create_time = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null  ">
+			update_time = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+	</trim> 
+	where shopping_id = #{shoppingId, jdbcType=DECIMAL}
+</update>
+
+<!-- 更新用户相应商品的信息 -->
+<update id="updateByUserCmmdty" parameterType="org.zyd.store.entity.ShoppingCartEntity" >
+	update shopping_cart set 
+	<trim  suffixOverrides="," >
+		<if test="partyId != null  ">
+			party_id = #{partyId, jdbcType=DECIMAL},
+		</if>
+		<if test="cmmdtyId != null  ">
+			cmmdty_id = #{cmmdtyId, jdbcType=DECIMAL},
+		</if>
+		<if test="qtyToBuy != null  ">
+			qty_to_buy = #{qtyToBuy, jdbcType=INTEGER},
+		</if>
+		<if test="addTime != null  ">
+			add_time = #{addTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="createTime != null  ">
+			create_time = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null  ">
+			update_time = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+	</trim> 
+	where party_id = #{partyId, jdbcType=DECIMAL} and cmmdty_id = #{cmmdtyId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.ShoppingCartEntity">
+	delete from shopping_cart where shopping_id = #{shoppingId}
+</update>
+
+<!-- 删除用户其中一个商品 -->
+<update id="deleteByUserCmmdty" parameterType="org.zyd.store.entity.ShoppingCartEntity">
+	delete from shopping_cart where party_id = #{partyId} and cmmdty_id = #{cmmdtyId}
+</update>
+
+<!-- 清空购物车 -->
+<update id="cleanShoppingCart" parameterType="org.zyd.store.entity.ShoppingCartEntity">
+	delete from shopping_cart where party_id = #{partyId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.ShoppingCartTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from shopping_cart 
+    <include refid="Where_Clause"/>
+    order by add_time desc
+</select>
+  	
+</mapper>   

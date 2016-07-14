@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.AddedEvaluationMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.AddedEvaluationEntity" >
+	<id column="added_eval_id" property="addedEvalId" jdbcType="DECIMAL" />
+	<result column="added_eval_type" property="addedEvalType" jdbcType="VARCHAR" />
+	<result column="added_eval_content" property="addedEvalContent" jdbcType="VARCHAR" />
+	<result column="event_ts" property="eventTs" jdbcType="TIMESTAMP" />
+	<result column="eval_id" property="evalId" jdbcType="DECIMAL" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+</resultMap>
+       
+<!-- added_evaluation table all fields -->
+<sql id="Base_Column_List" >
+	 added_eval_id, added_eval_type, added_eval_content, event_ts, eval_id, create_time, update_time
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="addedEvalId != null" >
+	    and added_eval_id = #{addedEvalId, jdbcType=DECIMAL}
+	</if>
+	<if test="addedEvalType != null and addedEvalType != ''" >
+	    and added_eval_type = #{addedEvalType, jdbcType=VARCHAR}
+	</if>
+	<if test="addedEvalContent != null and addedEvalContent != ''" >
+	    and added_eval_content = #{addedEvalContent, jdbcType=VARCHAR}
+	</if>
+	<if test="eventTs != null" >
+	    and event_ts = #{eventTs, jdbcType=TIMESTAMP}
+	</if>
+	<if test="evalId != null" >
+	    and eval_id = #{evalId, jdbcType=DECIMAL}
+	</if>
+	<if test="createTime != null" >
+	    and create_time = #{createTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="updateTime != null" >
+	    and update_time = #{updateTime, jdbcType=TIMESTAMP}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.AddedEvaluationEntity" useGeneratedKeys="true" keyProperty="addedEvalId">
+  	insert into added_evaluation(
+		added_eval_type,
+		added_eval_content,
+		event_ts,
+		eval_id,
+		create_time,
+		update_time
+	) values (
+		#{addedEvalType, jdbcType=VARCHAR},
+		#{addedEvalContent, jdbcType=VARCHAR},
+		#{eventTs, jdbcType=TIMESTAMP},
+		#{evalId, jdbcType=DECIMAL},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.AddedEvaluationEntity" >
+	update added_evaluation set 
+	<trim  suffixOverrides="," >
+		<if test="addedEvalType != null  and addedEvalType != '' ">
+			added_eval_type = #{addedEvalType, jdbcType=VARCHAR},
+		</if>
+		<if test="addedEvalContent != null  and addedEvalContent != '' ">
+			added_eval_content = #{addedEvalContent, jdbcType=VARCHAR},
+		</if>
+		<if test="eventTs != null  ">
+			event_ts = #{eventTs, jdbcType=TIMESTAMP},
+		</if>
+		<if test="evalId != null  ">
+			eval_id = #{evalId, jdbcType=DECIMAL},
+		</if>
+		<if test="createTime != null  ">
+			create_time = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null  ">
+			update_time = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+	</trim> 
+	where added_eval_id = #{addedEvalId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.AddedEvaluationEntity">
+	delete from added_evaluation where added_eval_id = #{addedEvalId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.AddedEvaluationTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from added_evaluation 
+    <include refid="Where_Clause"/>
+</select>
+  	
+<!-- 查询根据字段排序 -->
+<select id="selectWithSort" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.AddedEvaluationTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from added_evaluation 
+    <include refid="Where_Clause"/>
+    order by ${sortField} ${sortDir}
+</select>
+  	
+</mapper>   

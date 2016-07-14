@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.RightsConfigMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.RightsConfigEntity" >
+	<result column="rights" property="rights" jdbcType="VARCHAR" />
+	<result column="rights_description" property="rightsDescription" jdbcType="VARCHAR" />
+</resultMap>
+       
+<!-- rights_config table all fields -->
+<sql id="Base_Column_List" >
+	 rights, rights_description
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="rights != null and rights != ''" >
+	    and rights = #{rights, jdbcType=VARCHAR}
+	</if>
+	<if test="rightsDescription != null and rightsDescription != ''" >
+	    and rights_description = #{rightsDescription, jdbcType=VARCHAR}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.RightsConfigEntity" >
+  	insert into rights_config(
+		rights,
+		rights_description
+	) values (
+		#{rights, jdbcType=VARCHAR},
+		#{rightsDescription, jdbcType=VARCHAR}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.RightsConfigEntity" >
+	update rights_config set 
+	<trim  suffixOverrides="," >
+		<if test="rightsDescription != null  and rightsDescription != '' ">
+			rights_description = #{rightsDescription, jdbcType=VARCHAR},
+		</if>
+	</trim> 
+	where rights = #{rights, jdbcType=VARCHAR}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.RightsConfigEntity">
+	delete from rights_config where rights = #{rights}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.RightsConfigTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from rights_config 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

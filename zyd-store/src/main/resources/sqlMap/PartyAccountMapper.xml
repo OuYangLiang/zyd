@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.PartyAccountMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.PartyAccountEntity" >
+	<id column="acnt_id" property="acntId" jdbcType="DECIMAL" />
+	<result column="acnt_type" property="acntType" jdbcType="VARCHAR" />
+	<result column="acnt_val" property="acntVal" jdbcType="VARCHAR" />
+	<result column="acnt_status" property="acntStatus" jdbcType="VARCHAR" />
+	<result column="party_id" property="partyId" jdbcType="DECIMAL" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+</resultMap>
+       
+<!-- party_account table all fields -->
+<sql id="Base_Column_List" >
+	 acnt_id, acnt_type, acnt_val, acnt_status, party_id, create_time, update_time
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="acntId != null" >
+	    and acnt_id = #{acntId, jdbcType=DECIMAL}
+	</if>
+	<if test="acntType != null and acntType != ''" >
+	    and acnt_type = #{acntType, jdbcType=VARCHAR}
+	</if>
+	<if test="acntVal != null and acntVal != ''" >
+	    and acnt_val = #{acntVal, jdbcType=VARCHAR}
+	</if>
+	<if test="acntStatus != null and acntStatus != ''" >
+	    and acnt_status = #{acntStatus, jdbcType=VARCHAR}
+	</if>
+	<if test="partyId != null" >
+	    and party_id = #{partyId, jdbcType=DECIMAL}
+	</if>
+	<if test="createTime != null" >
+	    and create_time = #{createTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="updateTime != null" >
+	    and update_time = #{updateTime, jdbcType=TIMESTAMP}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.PartyAccountEntity" useGeneratedKeys="true" keyProperty="acntId">
+  	insert into party_account(
+		acnt_type,
+		acnt_val,
+		acnt_status,
+		party_id,
+		create_time,
+		update_time
+	) values (
+		#{acntType, jdbcType=VARCHAR},
+		#{acntVal, jdbcType=VARCHAR},
+		#{acntStatus, jdbcType=VARCHAR},
+		#{partyId, jdbcType=DECIMAL},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.PartyAccountEntity" >
+	update party_account set 
+	<trim  suffixOverrides="," >
+		<if test="acntType != null  and acntType != '' ">
+			acnt_type = #{acntType, jdbcType=VARCHAR},
+		</if>
+		<if test="acntVal != null  and acntVal != '' ">
+			acnt_val = #{acntVal, jdbcType=VARCHAR},
+		</if>
+		<if test="acntStatus != null  and acntStatus != '' ">
+			acnt_status = #{acntStatus, jdbcType=VARCHAR},
+		</if>
+		<if test="partyId != null  ">
+			party_id = #{partyId, jdbcType=DECIMAL},
+		</if>
+		<if test="createTime != null  ">
+			create_time = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null  ">
+			update_time = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+	</trim> 
+	where acnt_id = #{acntId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.PartyAccountEntity">
+	delete from party_account where acnt_id = #{acntId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.PartyAccountTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from party_account 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

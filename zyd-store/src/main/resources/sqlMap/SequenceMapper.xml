@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.SequenceMapper" > 
+
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.SequenceEntity" >
+	<result column="seq" property="seq" jdbcType="INTEGER" />
+</resultMap>
+
+<insert id="insertTeaSequence" parameterType="org.zyd.store.entity.SequenceEntity" useGeneratedKeys="true" keyProperty="seq">
+  	insert into tea_sequence() values()
+</insert>
+
+<insert id="insertTeapotSequence" parameterType="org.zyd.store.entity.SequenceEntity" useGeneratedKeys="true" keyProperty="seq">
+    insert into teapot_sequence() values()
+</insert>
+
+<insert id="insertBoutiqueSequence" parameterType="org.zyd.store.entity.SequenceEntity" useGeneratedKeys="true" keyProperty="seq">
+    insert into boutique_sequence() values()
+</insert>
+
+<insert id="insertPurchaseOrderSequence" parameterType="org.zyd.store.entity.SequenceEntity" useGeneratedKeys="true" keyProperty="seq">
+    insert into purchase_order_sequence() values()
+</insert>
+
+<insert id="insertReturnOrderSequence" parameterType="org.zyd.store.entity.SequenceEntity" useGeneratedKeys="true" keyProperty="seq">
+    insert into return_order_sequence() values()
+</insert>
+
+<insert id="insertRecommendSequence" parameterType="org.zyd.store.entity.SequenceEntity" useGeneratedKeys="true" keyProperty="seq">
+    insert into recommend_sequence() values()
+</insert>
+  	
+</mapper>

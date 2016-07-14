@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.ReturnOrderCommodityMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.ReturnOrderCommodityEntity" >
+	<id column="return_order_cmmdty_id" property="returnOrderCmmdtyId" jdbcType="DECIMAL" />
+	<result column="return_order_cmmdty_type" property="returnOrderCmmdtyType" jdbcType="VARCHAR" />
+	<result column="source_order_cmmdty_id" property="sourceOrderCmmdtyId" jdbcType="DECIMAL" />
+	<result column="cmmdty_id" property="cmmdtyId" jdbcType="DECIMAL" />
+	<result column="cmmdty_name" property="cmmdtyName" jdbcType="VARCHAR" />
+	<result column="actual_price" property="actualPrice" jdbcType="DECIMAL" />
+	<result column="qty" property="qty" jdbcType="INTEGER" />
+	<result column="return_order_id" property="returnOrderId" jdbcType="DECIMAL" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+</resultMap>
+       
+<!-- return_order_commodity table all fields -->
+<sql id="Base_Column_List" >
+	 return_order_cmmdty_id, return_order_cmmdty_type, source_order_cmmdty_id, cmmdty_id, cmmdty_name, actual_price, qty, return_order_id, create_time, update_time
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="returnOrderCmmdtyId != null" >
+	    and return_order_cmmdty_id = #{returnOrderCmmdtyId, jdbcType=DECIMAL}
+	</if>
+	<if test="returnOrderCmmdtyType != null and returnOrderCmmdtyType != ''" >
+	    and return_order_cmmdty_type = #{returnOrderCmmdtyType, jdbcType=VARCHAR}
+	</if>
+	<if test="sourceOrderCmmdtyId != null" >
+	    and source_order_cmmdty_id = #{sourceOrderCmmdtyId, jdbcType=DECIMAL}
+	</if>
+	<if test="cmmdtyId != null" >
+	    and cmmdty_id = #{cmmdtyId, jdbcType=DECIMAL}
+	</if>
+	<if test="cmmdtyName != null and cmmdtyName != ''" >
+	    and cmmdty_name = #{cmmdtyName, jdbcType=VARCHAR}
+	</if>
+	<if test="actualPrice != null" >
+	    and actual_price = #{actualPrice, jdbcType=DECIMAL}
+	</if>
+	<if test="qty != null" >
+	    and qty = #{qty, jdbcType=INTEGER}
+	</if>
+	<if test="returnOrderId != null" >
+	    and return_order_id = #{returnOrderId, jdbcType=DECIMAL}
+	</if>
+	<if test="createTime != null" >
+	    and create_time = #{createTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="updateTime != null" >
+	    and update_time = #{updateTime, jdbcType=TIMESTAMP}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.ReturnOrderCommodityEntity" useGeneratedKeys="true" keyProperty="returnOrderCmmdtyId">
+  	insert into return_order_commodity(
+		return_order_cmmdty_type,
+		source_order_cmmdty_id,
+		cmmdty_id,
+		cmmdty_name,
+		actual_price,
+		qty,
+		return_order_id,
+		create_time,
+		update_time
+	) values (
+		#{returnOrderCmmdtyType, jdbcType=VARCHAR},
+		#{sourceOrderCmmdtyId, jdbcType=DECIMAL},
+		#{cmmdtyId, jdbcType=DECIMAL},
+		#{cmmdtyName, jdbcType=VARCHAR},
+		#{actualPrice, jdbcType=DECIMAL},
+		#{qty, jdbcType=INTEGER},
+		#{returnOrderId, jdbcType=DECIMAL},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.ReturnOrderCommodityEntity" >
+	update return_order_commodity set 
+	<trim  suffixOverrides="," >
+		<if test="returnOrderCmmdtyType != null  and returnOrderCmmdtyType != '' ">
+			return_order_cmmdty_type = #{returnOrderCmmdtyType, jdbcType=VARCHAR},
+		</if>
+		<if test="sourceOrderCmmdtyId != null  ">
+			source_order_cmmdty_id = #{sourceOrderCmmdtyId, jdbcType=DECIMAL},
+		</if>
+		<if test="cmmdtyId != null  ">
+			cmmdty_id = #{cmmdtyId, jdbcType=DECIMAL},
+		</if>
+		<if test="cmmdtyName != null  and cmmdtyName != '' ">
+			cmmdty_name = #{cmmdtyName, jdbcType=VARCHAR},
+		</if>
+		<if test="actualPrice != null  ">
+			actual_price = #{actualPrice, jdbcType=DECIMAL},
+		</if>
+		<if test="qty != null  ">
+			qty = #{qty, jdbcType=INTEGER},
+		</if>
+		<if test="returnOrderId != null  ">
+			return_order_id = #{returnOrderId, jdbcType=DECIMAL},
+		</if>
+		<if test="createTime != null  ">
+			create_time = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null  ">
+			update_time = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+	</trim> 
+	where return_order_cmmdty_id = #{returnOrderCmmdtyId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.ReturnOrderCommodityEntity">
+	delete from return_order_commodity where return_order_cmmdty_id = #{returnOrderCmmdtyId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.ReturnOrderCommodityTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from return_order_commodity 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

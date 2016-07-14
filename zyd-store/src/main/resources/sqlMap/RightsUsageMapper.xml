@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.RightsUsageMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.RightsUsageEntity" >
+	<id column="event_id" property="eventId" jdbcType="DECIMAL" />
+	<result column="level" property="level" jdbcType="VARCHAR" />
+	<result column="rights" property="rights" jdbcType="VARCHAR" />
+	<result column="event_ts" property="eventTs" jdbcType="VARCHAR" />
+	<result column="party_id" property="partyId" jdbcType="DECIMAL" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+</resultMap>
+       
+<!-- rights_usage table all fields -->
+<sql id="Base_Column_List" >
+	 event_id, level, rights, event_ts, party_id, create_time, update_time
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="eventId != null" >
+	    and event_id = #{eventId, jdbcType=DECIMAL}
+	</if>
+	<if test="level != null and level != ''" >
+	    and level = #{level, jdbcType=VARCHAR}
+	</if>
+	<if test="rights != null and rights != ''" >
+	    and rights = #{rights, jdbcType=VARCHAR}
+	</if>
+	<if test="eventTs != null and eventTs != ''" >
+	    and event_ts = #{eventTs, jdbcType=VARCHAR}
+	</if>
+	<if test="partyId != null" >
+	    and party_id = #{partyId, jdbcType=DECIMAL}
+	</if>
+	<if test="createTime != null" >
+	    and create_time = #{createTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="updateTime != null" >
+	    and update_time = #{updateTime, jdbcType=TIMESTAMP}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.RightsUsageEntity" useGeneratedKeys="true" keyProperty="eventId">
+  	insert into rights_usage(
+		level,
+		rights,
+		event_ts,
+		party_id,
+		create_time,
+		update_time
+	) values (
+		#{level, jdbcType=VARCHAR},
+		#{rights, jdbcType=VARCHAR},
+		#{eventTs, jdbcType=VARCHAR},
+		#{partyId, jdbcType=DECIMAL},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.RightsUsageEntity" >
+	update rights_usage set 
+	<trim  suffixOverrides="," >
+		<if test="level != null  and level != '' ">
+			level = #{level, jdbcType=VARCHAR},
+		</if>
+		<if test="rights != null  and rights != '' ">
+			rights = #{rights, jdbcType=VARCHAR},
+		</if>
+		<if test="eventTs != null  and eventTs != '' ">
+			event_ts = #{eventTs, jdbcType=VARCHAR},
+		</if>
+		<if test="partyId != null  ">
+			party_id = #{partyId, jdbcType=DECIMAL},
+		</if>
+		<if test="createTime != null  ">
+			create_time = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null  ">
+			update_time = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+	</trim> 
+	where event_id = #{eventId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.RightsUsageEntity">
+	delete from rights_usage where event_id = #{eventId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.RightsUsageTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from rights_usage 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.RecommendedListMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.RecommendedListEntity" >
+	<result column="presentee_id" property="presenteeId" jdbcType="DECIMAL" />
+	<result column="party_id" property="partyId" jdbcType="DECIMAL" />
+</resultMap>
+       
+<!-- recommended_list table all fields -->
+<sql id="Base_Column_List" >
+	 presentee_id, party_id
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="presenteeId != null" >
+	    and presentee_id = #{presenteeId, jdbcType=DECIMAL}
+	</if>
+	<if test="partyId != null" >
+	    and party_id = #{partyId, jdbcType=DECIMAL}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.RecommendedListEntity" >
+  	insert into recommended_list(
+		presentee_id,
+		party_id
+	) values (
+		#{presenteeId, jdbcType=DECIMAL},
+		#{partyId, jdbcType=DECIMAL}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.RecommendedListEntity" >
+	update recommended_list set 
+	<trim  suffixOverrides="," >
+		<if test="partyId != null  ">
+			party_id = #{partyId, jdbcType=DECIMAL},
+		</if>
+	</trim> 
+	where presentee_id = #{presenteeId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.RecommendedListEntity">
+	delete from recommended_list where presentee_id = #{presenteeId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.RecommendedListTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from recommended_list 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

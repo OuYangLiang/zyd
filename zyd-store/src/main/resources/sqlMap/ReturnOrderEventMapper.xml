@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.ReturnOrderEventMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.ReturnOrderEventEntity" >
+	<id column="event_id" property="eventId" jdbcType="DECIMAL" />
+	<result column="event_ts" property="eventTs" jdbcType="TIMESTAMP" />
+	<result column="event_desc" property="eventDesc" jdbcType="VARCHAR" />
+	<result column="return_order_id" property="returnOrderId" jdbcType="DECIMAL" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+</resultMap>
+       
+<!-- return_order_event table all fields -->
+<sql id="Base_Column_List" >
+	 event_id, event_ts, event_desc, return_order_id, create_time, update_time
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="eventId != null" >
+	    and event_id = #{eventId, jdbcType=DECIMAL}
+	</if>
+	<if test="eventTs != null" >
+	    and event_ts = #{eventTs, jdbcType=TIMESTAMP}
+	</if>
+	<if test="eventDesc != null and eventDesc != ''" >
+	    and event_desc = #{eventDesc, jdbcType=VARCHAR}
+	</if>
+	<if test="returnOrderId != null" >
+	    and return_order_id = #{returnOrderId, jdbcType=DECIMAL}
+	</if>
+	<if test="createTime != null" >
+	    and create_time = #{createTime, jdbcType=TIMESTAMP}
+	</if>
+	<if test="updateTime != null" >
+	    and update_time = #{updateTime, jdbcType=TIMESTAMP}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.ReturnOrderEventEntity" useGeneratedKeys="true" keyProperty="eventId">
+  	insert into return_order_event(
+		event_ts,
+		event_desc,
+		return_order_id,
+		create_time,
+		update_time
+	) values (
+		#{eventTs, jdbcType=TIMESTAMP},
+		#{eventDesc, jdbcType=VARCHAR},
+		#{returnOrderId, jdbcType=DECIMAL},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.ReturnOrderEventEntity" >
+	update return_order_event set 
+	<trim  suffixOverrides="," >
+		<if test="eventTs != null  ">
+			event_ts = #{eventTs, jdbcType=TIMESTAMP},
+		</if>
+		<if test="eventDesc != null  and eventDesc != '' ">
+			event_desc = #{eventDesc, jdbcType=VARCHAR},
+		</if>
+		<if test="returnOrderId != null  ">
+			return_order_id = #{returnOrderId, jdbcType=DECIMAL},
+		</if>
+		<if test="createTime != null  ">
+			create_time = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null  ">
+			update_time = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+	</trim> 
+	where event_id = #{eventId, jdbcType=DECIMAL}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.ReturnOrderEventEntity">
+	delete from return_order_event where event_id = #{eventId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.ReturnOrderEventTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from return_order_event 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   

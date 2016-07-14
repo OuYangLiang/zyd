@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zyd.store.mapper.ProvinceMapper" > 
+
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="org.zyd.store.entity.ProvinceEntity" >
+	<id column="pro_id" property="proId" jdbcType="INTEGER" />
+	<result column="pro_name" property="proName" jdbcType="VARCHAR" />
+	<result column="sort" property="sort" jdbcType="INTEGER" />
+	<result column="pro_remark" property="proRemark" jdbcType="VARCHAR" />
+</resultMap>
+       
+<!-- province table all fields -->
+<sql id="Base_Column_List" >
+	 pro_id, pro_name, sort, pro_remark
+</sql>
+   
+<!-- 查询条件 -->
+<sql id="Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="proId != null" >
+	    and pro_id = #{proId, jdbcType=INTEGER}
+	</if>
+	<if test="proName != null and proName != ''" >
+	    and pro_name = #{proName, jdbcType=VARCHAR}
+	</if>
+	<if test="sort != null" >
+	    and sort = #{sort, jdbcType=INTEGER}
+	</if>
+	<if test="proRemark != null and proRemark != ''" >
+	    and pro_remark = #{proRemark, jdbcType=VARCHAR}
+	</if>
+</trim>
+</sql>
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="org.zyd.store.entity.ProvinceEntity" useGeneratedKeys="true" keyProperty="proId">
+  	insert into province(
+		pro_name,
+		sort,
+		pro_remark
+	) values (
+		#{proName, jdbcType=VARCHAR},
+		#{sort, jdbcType=INTEGER},
+		#{proRemark, jdbcType=VARCHAR}
+	)
+</insert>
+
+<!-- 根据所选内容更新 -->
+<update id="updateBySelective" parameterType="org.zyd.store.entity.ProvinceEntity" >
+	update province set 
+	<trim  suffixOverrides="," >
+		<if test="proName != null  and proName != '' ">
+			pro_name = #{proName, jdbcType=VARCHAR},
+		</if>
+		<if test="sort != null  ">
+			sort = #{sort, jdbcType=INTEGER},
+		</if>
+		<if test="proRemark != null  and proRemark != '' ">
+			pro_remark = #{proRemark, jdbcType=VARCHAR},
+		</if>
+	</trim> 
+	where pro_id = #{proId, jdbcType=INTEGER}
+</update>
+
+<!-- 删除 -->
+<update id="delete" parameterType="org.zyd.store.entity.ProvinceEntity">
+	delete from province where pro_id = #{proId}
+</update>
+
+<!-- 查询 -->
+<select id="select" resultMap="BaseResultMap"  parameterType="org.zyd.store.term.ProvinceTerm">
+	select 
+    <include refid="Base_Column_List"/>
+    from province 
+    <include refid="Where_Clause"/>
+</select>
+  	
+</mapper>   
